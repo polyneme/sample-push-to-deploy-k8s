@@ -26,11 +26,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
 
-#     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
-#     - name: Checkout master
-#       uses: actions/checkout@main
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
+    - name: Checkout master
+      uses: actions/checkout@main
       
-    # May not require the above action.  
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v2
@@ -50,22 +49,18 @@ jobs:
     - name: Push image to DockerHub Container Registry
       run: docker push ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7)
 
-#     # Install doctl.
-#     - name: Install doctl
-#       uses: digitalocean/action-doctl@v2
-#       with:
-#         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-    
-
+    # Install doctl.
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
 #     - name: Log in to DigitalOcean Container Registry with short-lived credentials
 #       run: doctl registry login --expiry-seconds 1200
 
-
-
-#     # Deploy to DigitalOCcean Kubernetes.
-#     - name: Update deployment file
-#       run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.REGISTRY_NAME }}/python-example:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
+#     # Deploy to DigitalOcean Kubernetes.
+    - name: Update deployment file
+      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.REGISTRY_NAME }}/python-example:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
 
 #     - name: Save DigitalOcean kubeconfig with short-lived credentials
 #       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.CLUSTER_NAME }}
