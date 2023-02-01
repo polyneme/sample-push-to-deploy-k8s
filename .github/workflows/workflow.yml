@@ -46,6 +46,7 @@ jobs:
     - name: Build container image
       run: docker build -t ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7) .
 
+    # Push it
     - name: Push image to DockerHub Container Registry
       run: docker push ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7)
 
