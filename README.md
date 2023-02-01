@@ -3,7 +3,7 @@
 based on https://github.com/digitalocean/sample-push-to-deploy-doks
 
 ## Push-to-Deploy Example Using GitHub Actions for DigitalOcean
-This repository contains an example workflow using the [GitHub Action for DigitalOcean](https://github.com/digitalocean/action-doctl) to deploy to a DigitalOcean Kubernetes cluster.
+This repository contains an example workflow to build, tag, push a container image to a container registry and deploy to a Kubernetes cluster.
 
 ## Workflow
 The [example workflow](https://github.com/digitalocean/sample-push-to-deploy-doks/blob/main/.github/workflows/workflow.yml) triggers on every push to this repo's main branch.
