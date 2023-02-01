@@ -41,14 +41,13 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        
-    - name: Build and push
-      uses: docker/build-push-action@v4
-      with:
-        push: true
-        tags: python-example:$(echo $GITHUB_SHA | head -c7)
 
-      
+    # Build a Docker image of your application in your registry and tag the image with the $GITHUB_SHA.
+    - name: Build container image
+      run: docker build -t ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7) .
+
+    - name: Push image to DockerHub Container Registry
+      run: docker push ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7)
 
 #     # Install doctl.
 #     - name: Install doctl
@@ -56,15 +55,12 @@ jobs:
 #       with:
 #         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     
-#     # Build a Docker image of your application in your registry and tag the image with the $GITHUB_SHA.
-#     - name: Build container image
-#       run: docker build -t ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7) .
+
 
 #     - name: Log in to DigitalOcean Container Registry with short-lived credentials
 #       run: doctl registry login --expiry-seconds 1200
 
-#     - name: Push image to DigitalOcean Container Registry
-#       run: docker push ${{ secrets.REGISTRY_NAME }}/python-example:$(echo $GITHUB_SHA | head -c7)
+
 
 #     # Deploy to DigitalOCcean Kubernetes.
 #     - name: Update deployment file
